@@ -4,9 +4,18 @@ import torch
 from torchvision import transforms
 from PIL import Image
 import io
+from fastapi.middleware.cors import CORSMiddleware
 
 # -------------------- APP CONFIG --------------------
 app = FastAPI(title="Tomato Disease Detection API", version="1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or use ["http://localhost:5173"] for stricter rule
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 MODEL_PATH = "tomato_resnet50_model_full.pth"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
